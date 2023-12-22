@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>calculator sample</title>
+    <link rel="manifest" href="/manifest.json">
+    <style>
+      body {
+        background-color: black;
+      }
+      .text-bar {
+        position: relative;
+        width: 260px;
+        height: 10vh;
+        background-color: rgb(137, 135, 135);
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font: 800;
+        font-size: 50px;
+        text-align: left;
+        overflow: auto;
+      }
+      .text{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        overflow-x: hidden;
+      }
+      .row-1 button {
+        height: 62px;
+        width: 62px;
+        border: none;
+        border-radius: 50%;
+        background-color: #726f6f;
+        color: white;
+        margin-bottom: 5px;
+        cursor: pointer;
+        font-size: 25px;
+      }
+      .row-1 button:hover {
+        border: 2px solid black;
+      }
+      button:nth-child(4) {
+        background-color: orange;
+      }
+      .row-1 .row-2 {
+        text-transform: capitalize;
+        font-size: 17px;
+      }
+      @media screen and (max-width: 600px) {
+        .direction {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        .text-bar {
+          width: 370px;
+          height: 42vh;
+          background-color: rgba(121, 117, 117, 0.368);
+          color: white;
+          font-size: 80px;
+          text-align: end;
+        }
+        .row-1 button {
+          width: 85px;
+          height: 85px;
+          font-size: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="text-bar">
+      <div class="text" id="displayResult"></div>
+    </div>
+    <div class="direction">
+      <div class="row-1">
+        <button onclick="callone()">1</button>
+        <button onclick="calltwo()">2</button>
+        <button onclick="callthree()">3</button>
+        <button onclick="addition()">+</button>
+      </div>
+      <div class="row-1">
+        <button onclick="callfour()">4</button>
+        <button onclick="callfive()">5</button>
+        <button onclick="callSix()">6</button>
+        <button onclick="subtraction()">-</button>
+      </div>
+      <div class="row-1">
+        <button onclick="callSeven()">7</button>
+        <button onclick="callEight()">8</button>
+        <button onclick="callNine()">9</button>
+        <button onclick="multiplecation()">×</button>
+      </div>
+      <div class="row-1">
+        <button onclick="callZero()">0</button>
+        <button class="row-2" onclick="resetButton()">Clear</button>
+        <button onclick="resultvalue()">=</button>
+        <button onclick="divide()">÷</button>
+      </div>
+    </div>
+    <script>
+      let result = 0;
+      let variable1 = "";
+      let orgvalue = 0;
+      let secValue = 0;
+      let operation = "";
+
+      function callone() {
+        handleNumber("1");
+      }
+
+      function calltwo() {
+        handleNumber("2");
+      }
+
+      function callthree() {
+        handleNumber("3");
+      }
+
+      function callfour() {
+        handleNumber("4");
+      }
+
+      function callfive() {
+        handleNumber("5");
+      }
+
+      function callSix() {
+        handleNumber("6");
+      }
+
+      function callSeven() {
+        handleNumber("7");
+      }
+
+      function callEight() {
+        handleNumber("8");
+      }
+
+      function callNine() {
+        handleNumber("9");
+      }
+
+      function callZero() {
+        handleNumber("0");
+      }
+
+      function handleNumber(number) {
+        if (result !== 0) {
+          variable1 = number;
+          result = 0;
+          display();
+        } else {
+          variable1 += number;
+          display();
+        }
+      }
+
+      function addition() {
+        performOperation("+");
+      }
+
+      function subtraction() {
+        performOperation("-");
+      }
+
+      function multiplication() {
+        performOperation("*");
+      }
+
+      function divide() {
+        performOperation("/");
+      }
+
+      function resultvalue() {
+        performResult();
+      }
+
+      function performOperation(op) {
+        if (operation !== "") {
+          resultvalue();
+        }
+        orgvalue = Number(variable1);
+        variable1 = "";
+        operation = op;
+        performDisplay(op);
+      }
+
+      function performResult() {
+        secValue = Number(variable1);
+        switch (operation) {
+          case "+":
+            result = orgvalue + secValue;
+            break;
+          case "-":
+            result = orgvalue - secValue;
+            break;
+          case "*":
+            result = orgvalue * secValue;
+            break;
+          case "/":
+            result = orgvalue / secValue;
+            break;
+        }
+        variable1 = String(result);
+        orgvalue = 0;
+        secValue = 0;
+        operation = "";
+        display();
+      }
+      function display(string) {
+        let displayResultElement = document.getElementById("displayResult");
+        displayResultElement.textContent = variable1;
+      }
+      function performDisplay(str) {
+        let displayResultElement = document.getElementById("displayResult");
+        displayResultElement.textContent = str;
+      }
+      function minusDisplay(str) {
+        let displayResultElement = document.getElementById("displayResult");
+        displayResultElement.textContent = str;
+      }
+      function resetButton() {
+        variable1 = "";
+        result = 0;
+        orgvalue = 0;
+        display();
+      }
+    </script>
+  </body>
+</html>
